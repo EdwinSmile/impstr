@@ -15,12 +15,12 @@ A multiplayer word deduction game where players guess who the imposter is based 
 
 ## Features
 
-- 🎮 Real-time multiplayer gameplay (3-20 players)
-- 📱 Mobile-friendly design (works on phones/tablets)
-- 🔄 WebSocket-based real-time updates
-- 🎯 Multiple game phases (clues, discussion, voting)
-- 📊 Game history and statistics
-- 🌍 Shareable game lobbies
+- Real-time multiplayer gameplay (3-20 players)
+- Mobile-friendly design (works on phones/tablets)
+- WebSocket-based real-time updates
+-  Multiple game phases (clues, discussion, voting)
+-  Game history and statistics
+-  Shareable game lobbies
 
 ## Tech Stack
 
