@@ -1,6 +1,6 @@
 import { v4 as uuidv4 } from 'uuid';
-import { Game, Player, PlayerRole } from '../../shared/types';
-import { GAME_SETTINGS, WORD_BANK, GAME_PHASES, PLAYER_ROLES } from '../../shared/constants';
+import { Game, Player, PlayerRole } from '../../../shared/types';
+import { GAME_SETTINGS, WORD_BANK, GAME_PHASES, PLAYER_ROLES } from '../../../shared/constants';
 
 export class GameManager {
   private games: Map<string, Game> = new Map();
