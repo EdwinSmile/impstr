@@ -1,5 +1,5 @@
 import { Server as SocketIOServer, Socket } from 'socket.io';
-import { ClientToServerEvents, ServerToClientEvents } from '../../shared/types';
+import { ClientToServerEvents, ServerToClientEvents } from '../../../shared/types';
 import { GameManager } from '../game/GameManager';
 
 export function setupSocketHandlers(
