@@ -3,6 +3,7 @@ import { createServer } from 'http';
 import { Server as SocketIOServer } from 'socket.io';
 import cors from 'cors';
 import dotenv from 'dotenv';
+import path from 'path';
 import { GameManager } from './game/GameManager';
 import { setupSocketHandlers } from './sockets/socketHandlers';
 
@@ -33,6 +34,16 @@ app.get('/health', (req, res) => {
 
 // Setup Socket.IO handlers
 setupSocketHandlers(io, gameManager);
+
+// Serve Vite-built client in production
+const clientDist = path.join(__dirname, '..', '..', 'client', 'dist');
+if (process.env.NODE_ENV === 'production') {
+  app.use(express.static(clientDist));
+  // Fallback to index.html for SPA routes
+  app.get('*', (req, res) => {
+    res.sendFile(path.join(clientDist, 'index.html'));
+  });
+}
 
 // Start server
 httpServer.listen(PORT, () => {
