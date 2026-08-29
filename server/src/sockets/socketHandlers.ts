@@ -14,10 +14,10 @@ export function setupSocketHandlers(
       try {
         const game = gameManager.createGame(hostName);
         socket.join(game.id);
-        callback(null, game);
+        callback(null as any, game);
         io.to(game.id).emit('game:started', game);
       } catch (error) {
-        callback(error);
+        callback(error as any);
       }
     });
 
@@ -26,15 +26,15 @@ export function setupSocketHandlers(
       try {
         const game = gameManager.joinGame(gameCode, playerName);
         if (!game) {
-          callback(new Error('Game not found or is full'));
+          callback(new Error('Game not found or is full') as any);
           return;
         }
 
         socket.join(game.id);
-        callback(null, game);
+        callback(null as any, game);
         io.to(game.id).emit('game:updated', game);
       } catch (error) {
-        callback(error);
+        callback(error as any);
       }
     });
 
@@ -43,14 +43,14 @@ export function setupSocketHandlers(
       try {
         const game = gameManager.startGame(gameId);
         if (!game) {
-          callback(new Error('Failed to start game'));
+          callback(new Error('Failed to start game') as any);
           return;
         }
 
-        callback(null);
+        callback(null as any);
         io.to(gameId).emit('game:started', game);
       } catch (error) {
-        callback(error);
+        callback(error as any);
       }
     });
 
@@ -60,7 +60,7 @@ export function setupSocketHandlers(
         // Find socket user's player ID
         const game = gameManager.getGame(gameId);
         if (!game) {
-          callback(new Error('Game not found'));
+          callback(new Error('Game not found') as any);
           return;
         }
 
@@ -68,15 +68,15 @@ export function setupSocketHandlers(
         // For now, we'll update the last player who gave a clue
         const game_updated = gameManager.recordClue(gameId, game.currentClueGiver || '', clue);
         if (!game_updated) {
-          callback(new Error('Failed to record clue'));
+          callback(new Error('Failed to record clue') as any);
           return;
         }
 
-        callback(null);
+        callback(null as any);
         io.to(gameId).emit('game:clue-given', clue, game.currentClueGiver || '');
         io.to(gameId).emit('game:updated', game_updated);
       } catch (error) {
-        callback(error);
+        callback(error as any);
       }
     });
 
@@ -86,17 +86,17 @@ export function setupSocketHandlers(
         // In a real implementation, we'd get the voter ID from socket tracking
         const game = gameManager.getGame(gameId);
         if (!game) {
-          callback(new Error('Game not found'));
+          callback(new Error('Game not found') as any);
           return;
         }
 
         const updatedGame = gameManager.recordVote(gameId, socket.id, votedForId);
         if (!updatedGame) {
-          callback(new Error('Failed to record vote'));
+          callback(new Error('Failed to record vote') as any);
           return;
         }
 
-        callback(null);
+        callback(null as any);
         io.to(gameId).emit('game:vote-cast', socket.id, votedForId);
         io.to(gameId).emit('game:updated', updatedGame);
 
@@ -105,7 +105,7 @@ export function setupSocketHandlers(
           io.to(gameId).emit('game:finished', updatedGame.winner, updatedGame);
         }
       } catch (error) {
-        callback(error);
+        callback(error as any);
       }
     });
 
@@ -113,9 +113,9 @@ export function setupSocketHandlers(
     socket.on('game:leave', (gameId: string, callback) => {
       try {
         socket.leave(gameId);
-        callback(null);
+        callback(null as any);
       } catch (error) {
-        callback(error);
+        callback(error as any);
       }
     });
 
