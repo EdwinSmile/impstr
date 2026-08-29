@@ -5,10 +5,5 @@
   "installCommand": "npm install && npm install --prefix server && npm install --prefix client",
   "env": {
     "NODE_ENV": "production"
-  },
-  "functions": {
-    "server/dist/index.js": {
-      "runtime": "nodejs20.x"
-    }
   }
 }
