@@ -13,9 +13,10 @@ const app = express();
 const httpServer = createServer(app);
 const io = new SocketIOServer(httpServer, {
   cors: {
-    origin: process.env.CLIENT_URL || 'http://localhost:3000',
+    origin: process.env.CLIENT_URL || ['http://localhost:3000', 'http://localhost:5173'],
     methods: ['GET', 'POST'],
   },
+  transports: ['websocket', 'polling'],
 });
 
 const PORT = process.env.PORT || 4000;
@@ -45,10 +46,12 @@ if (process.env.NODE_ENV === 'production') {
   });
 }
 
-// Start server
-httpServer.listen(PORT, () => {
-  console.log(`✅ Server running on http://localhost:${PORT}`);
-  console.log(`🎮 WebSocket server ready for connections`);
-});
+// Start server only if not in serverless environment
+if (!process.env.VERCEL) {
+  httpServer.listen(PORT, () => {
+    console.log(`✅ Server running on http://localhost:${PORT}`);
+    console.log(`🎮 WebSocket server ready for connections`);
+  });
+}
 
 export { app, httpServer, io, gameManager };
